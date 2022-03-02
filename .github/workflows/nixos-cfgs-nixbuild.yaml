@@ -1,0 +1,35 @@
+name: nixos-cfgs-nixbuild
+
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+
+  build-nixos:
+    name: Build NixOS Configs
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: nixbuild/nix-quick-install-action@v11
+        with:
+          nix_on_tmpfs: true
+          nix_conf: |
+            experimental-features = nix-command flakes
+
+      - uses: nixbuild/nixbuild-action@v8
+        with:
+          nixbuild_ssh_key: ${{ secrets.nixbuild_ssh_key }}
+
+      - name: Build NixOS Configs
+        working-directory: nixos-configurations
+        run: |
+          nix build -L \
+            --eval-store auto --store ssh-ng://eu.nixbuild.net \
+            .#dell-xps \
+            .#tongfang-amd

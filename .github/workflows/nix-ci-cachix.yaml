@@ -1,0 +1,37 @@
+name: nix-ci-cachix
+
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+
+  checks:
+    name: Checks
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: nixbuild/nix-quick-install-action@v11
+        with:
+          nix_conf: |
+            experimental-features = nix-command flakes
+
+      - uses: cachix/cachix-action@v10
+        with:
+          name: nixbuild
+          signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
+
+      - name: Build Nix flake checks
+        working-directory: nix-ci
+        # We could use `nix flake check` here, but we build in the same way
+        # as the `nix-ci-nixbuild` workflow to be able to compare build times
+        run: |
+          nix build -L \
+            .#checks.x86_64-linux.binaryTarball \
+            .#checks.x86_64-linux.installTests \
+            .#checks.x86_64-linux.perlBindings

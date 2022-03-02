@@ -1,0 +1,33 @@
+name: nixos-cfgs-cachix
+
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+
+  build-nixos:
+    name: Build NixOS Configs
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: nixbuild/nix-quick-install-action@v11
+        with:
+          nix_conf: |
+            experimental-features = nix-command flakes
+
+      - uses: cachix/cachix-action@v10
+        with:
+          name: nixbuild
+          signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
+
+      - name: Build NixOS Configs
+        working-directory: nixos-configurations
+        run: |
+          nix build -L \
+            .#dell-xps \
+            .#tongfang-amd

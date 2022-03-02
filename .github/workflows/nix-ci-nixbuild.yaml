@@ -1,0 +1,38 @@
+name: nix-ci-nixbuild
+
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+
+  checks:
+    name: Checks
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: nixbuild/nix-quick-install-action@v11
+        with:
+          nix_on_tmpfs: true
+          nix_conf: |
+            experimental-features = nix-command flakes
+
+      - uses: nixbuild/nixbuild-action@v8
+        with:
+          nixbuild_ssh_key: ${{ secrets.nixbuild_ssh_key }}
+
+      - name: Build Nix flake checks
+        working-directory: nix-ci
+        # `nix flake check` doesn't seem to work with `--store`, so
+        # we build the individual checks with `nix build` instead
+        run: |
+          nix build -L \
+            --eval-store auto --store ssh-ng://eu.nixbuild.net \
+            .#checks.x86_64-linux.binaryTarball \
+            .#checks.x86_64-linux.installTests \
+            .#checks.x86_64-linux.perlBindings
