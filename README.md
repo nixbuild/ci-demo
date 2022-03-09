@@ -15,14 +15,21 @@ how to achieve performant Nix CI builds.
   In this repository, we have two workflows that builds Gabriel's NixOS
   configurations.
 
-  The [nixos-cfgs-cachix.yaml](.github/workflows/nixos-cfgs-cachix.yaml)
+  The [nixos-cfgs-cachix.yaml](https://github.com/nixbuild/ci-demo/actions/workflows/nixos-cfgs-cachix.yaml)
   workflow uses [Cachix](https://www.cachix.org/) to speed up the building by
   caching build results. Gabriel also uses a Cachix-based build process in his
   blog post. We have simplified the building somewhat in our workflow to make it
   clearer, but the idea is the same.
 
-  The [nix-ci-nixbuild.yaml](.github/workflows/nix-ci-nixbuild.yaml) instead
-  uses [nixbuild.net](https://nixbuild.net/) to perform the same builds.
+  The [nix-ci-nixbuild.yaml](https://github.com/nixbuild/ci-demo/actions/workflows/nixos-cfgs-nixbuild.yaml)
+  instead uses [nixbuild.net](https://nixbuild.net/) to perform the same builds.
+  It uses Nix ability to run builds in a remote Nix store to achieve the
+  **fastest possible** Nix CI builds. The support for remote store building in
+  nixbuild.net is a beta feature, but it is available to all nixbuild.net users
+  with no extra setup needed. Remote store building avoids having to download
+  any build inputs and outputs to the GitHub Action runner machine, which makes
+  a no-op build of the NixOS configurations take around **30 seconds**, compared
+  to **5 minutes** for doing the same thing using a Nix binary cache.
 
 
 * [nix-ci/flake.nix](nix-ci/flake.nix)
