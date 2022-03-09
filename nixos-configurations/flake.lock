@@ -23,11 +23,11 @@
         "tex2nix": "tex2nix"
       },
       "locked": {
-        "lastModified": 1646137123,
-        "narHash": "sha256-LlOyvZSjyO6y75W6WZeCBmCgc+9Fs9p82LmWXHTM/9k=",
+        "lastModified": 1646766194,
+        "narHash": "sha256-P+U/Sj27xPtch9EOhW8QmJtc1Hf8exPLwccwcR3PaOk=",
         "owner": "gvolpe",
         "repo": "nix-config",
-        "rev": "7fb0481c8c6643b15b3d96df750a2593072d9f1f",
+        "rev": "05d965b52e043eb78bea42f1cdf0900fea827e34",
         "type": "github"
       },
       "original": {
