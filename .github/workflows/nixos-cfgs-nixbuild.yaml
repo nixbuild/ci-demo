@@ -2,6 +2,7 @@ name: nixos-cfgs-nixbuild
 
 
 on:
+  pull_request:
   push:
     branches:
       - main
