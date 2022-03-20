@@ -1,4 +1,4 @@
-name: nixos-cfgs-nixbuild
+name: nixos-cfgs-nixbuild-ci
 
 
 on:
@@ -13,4 +13,5 @@ jobs:
     secrets:
       nixbuild_ssh_key: ${{ secrets.nixbuild_ssh_key }}
     with:
+      flake_directory: nixos-configurations
       filter_builds: '.top_attr == "packages"'
