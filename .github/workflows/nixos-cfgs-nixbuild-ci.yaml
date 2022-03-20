@@ -13,5 +13,5 @@ jobs:
     secrets:
       nixbuild_ssh_key: ${{ secrets.nixbuild_ssh_key }}
     with:
-      flake_directory: nixos-configurations
+      flake_directory: ./nixos-configurations
       filter_builds: '.top_attr == "packages"'

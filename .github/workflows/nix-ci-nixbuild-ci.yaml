@@ -12,4 +12,4 @@ jobs:
     secrets:
       nixbuild_ssh_key: ${{ secrets.nixbuild_ssh_key }}
     with:
-      flake_directory: nix-ci
+      flake_directory: ./nix-ci
