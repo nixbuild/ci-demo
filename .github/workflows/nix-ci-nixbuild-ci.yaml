@@ -1,0 +1,13 @@
+name: nix-ci-nixbuild-ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  checks:
+    uses: nixbuild/nixbuild-action/.github/workflows/ci-workflow.yml@ci-workflow
+    secrets:
+      nixbuild_ssh_key: ${{ secrets.nixbuild_ssh_key }}

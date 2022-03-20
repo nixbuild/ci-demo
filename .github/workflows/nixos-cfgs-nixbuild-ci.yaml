@@ -1,0 +1,16 @@
+name: nixos-cfgs-nixbuild
+
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  checks:
+    uses: nixbuild/nixbuild-action/.github/workflows/ci-workflow.yml@ci-workflow
+    secrets:
+      nixbuild_ssh_key: ${{ secrets.nixbuild_ssh_key }}
+    with:
+      filter_builds: '.top_attr == "packages"'
