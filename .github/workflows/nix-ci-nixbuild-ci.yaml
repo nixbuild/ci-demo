@@ -8,7 +8,7 @@ on:
 
 jobs:
   checks:
-    uses: nixbuild/nixbuild-action/.github/workflows/ci-workflow.yml@v10
+    uses: nixbuild/nixbuild-action/.github/workflows/ci-workflow.yml@v15
     secrets:
       nixbuild_ssh_key: ${{ secrets.nixbuild_ssh_key }}
     with:
