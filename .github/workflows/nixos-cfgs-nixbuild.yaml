@@ -17,15 +17,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: nixbuild/nix-quick-install-action@v24
+      - uses: nixbuild/nix-quick-install-action@v26
         with:
           nix_on_tmpfs: true
           nix_conf: |
             experimental-features = nix-command flakes
 
-      - uses: nixbuild/nixbuild-action@v18
+      - uses: nixbuild/nixbuild-action@v19
         with:
-          nixbuild_ssh_key: ${{ secrets.nixbuild_ssh_key }}
+          nixbuild_token: ${{ secrets.nixbuild_token }}
 
       - name: Build NixOS Configs
         working-directory: nixos-configurations
